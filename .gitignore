@@ -1,0 +1,9 @@
+#Ignore all of the following files.
+/Data/*
+/logs/*
+/Weights/*
+/Output/*
+/Pickle/*
+/Weights_Bigger/*
+/Intermediate_outputs/*
+/GAN_Weights/*
