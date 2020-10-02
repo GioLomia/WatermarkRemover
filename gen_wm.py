@@ -14,8 +14,17 @@ import numpy as np
 import cv2
 import random
 
+"""
+This file adds extra watermark application styles. Currently this is not in use but, 
+if implemented provides a greater diversity of the watermarks applied to images
+"""
 
 def create_rnd_txt_wm ():
+    """Generates the random text based watermark
+
+    Returns:
+        Pil.Image: The random text watermark.
+    """
 
     prints = list(string.printable)[0:84]
     #open all of the images from the VOC2008 dataset as jpegs
@@ -53,7 +62,14 @@ def create_rnd_txt_wm ():
     return rotated_text
 
 def apply_rnd_watermark(im):
+    """Applies the random watermark to a given image.
 
+    Args:
+        im (PIL.Image): The image that needs marking.
+
+    Returns:
+        PIL.Image: The marked image.
+    """
     img = im
     
     for i in range(np.random.randint(low=1, high=3)):
@@ -76,7 +92,12 @@ def apply_rnd_watermark(im):
 
 
 def apply_grid_watermark(im, watermark_1):
+    """Applies a grid style watermark to the given image
 
+    Args:
+        im (PIL.Image): The image that needs marking
+        watermark_1 (PIL.Image): The basis for the grid watermark 
+    """
     main = im
     mark = random.choice([watermark_1, create_rnd_txt_wm().convert("RGBA")])
 

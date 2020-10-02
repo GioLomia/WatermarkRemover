@@ -11,10 +11,18 @@ from PIL import Image
 
 import gen_wm
 
+#This is a utility file that provides multiiple helper functions for our neural network project.
+
+
 def plot_rgb_img(img):
-  plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-  plt.axis('off')
-  plt.show()
+    """Helper function to quickly plot an image with correct formatting.
+
+    Args:
+        img (np.array): image to be plotted.
+    """
+    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)) #Plot the image converted from color scheme BGR to RGB
+    plt.axis('off')
+    plt.show()
 
 def apply_watermark (im, watermark, transperency):
     """
@@ -98,31 +106,12 @@ def generate_wm_directory(orig_dir, output_dir, wm_dir):
         print(im.shape)
         transperency = rnd.uniform(0.5, 0.65)
 
-        wm_type = rnd.choice(["simple_apply", "random_apply", "grid_apply"])
+        wm_type = "simple_apply"
 
         print(wm_type, all_im_ls[i])
-        if wm_type == "simple_apply":
-            wm_im = apply_watermark(im, wm, transperency)
-        elif wm_type == "random_apply":
-            
-            im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
-            im_pil = Image.fromarray(im)
-
-            wm_im = gen_wm.apply_rnd_watermark(im_pil)
-            wm_im = np.array(wm_im)
-            wm_im = wm_im[:, :, ::-1].copy() 
-        else:
-
-            im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
-            im_pil = Image.fromarray(im)
-
-            wm = cv2.cvtColor(wm, cv2.COLOR_BGR2RGB)
-            wm_pil = Image.fromarray(wm)
-
-            wm_im = gen_wm.apply_grid_watermark(im_pil,wm_pil)
-
-            wm_im = np.array(wm_im)
-            wm_im = wm_im[:, :, ::-1].copy()
+        # if wm_type == "simple_apply":
+        wm_im = apply_watermark(im, wm, transperency)
+        
 
         print(f"{output_dir}{all_im_ls[i]}")
         wrt = cv2.imwrite( f"{output_dir}{all_im_ls[i]}", wm_im)
@@ -167,14 +156,6 @@ def toss_ims2dirs(source_dir, out_dir, dataset_size, data_split = (0.8, 0.15, 0.
         else:
             shutil.copy(f"{source_dir}WM_Images/{wm_data_source[i]}",f"{out_dir}{sub_dir}/WM_Images/watermark/{im_data_source[i]}")
 
-    print(len(os.listdir(f"{out_dir}/Train/Original_Ims/")))
-    print(len(os.listdir(f"{out_dir}/Val/Original_Ims/")))
-    print(len(os.listdir(f"{out_dir}/Test/Original_Ims/")))
-
-    print(len(os.listdir(f"{out_dir}/Train/WM_Images/")))
-    print(len(os.listdir(f"{out_dir}/Val/WM_Images/")))
-    print(len(os.listdir(f"{out_dir}/Test/WM_Images/")))
-
 
 def main ():
     gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -185,14 +166,13 @@ def main ():
     wm_path = "Data/Watermarks/"
     wm_list = os.listdir(wm_path)
 
-    # print(get_random_string(3))
     #Run this function first after it is done comment it out.
-    # generate_wm_directory("Data/Better_Marked_DS/Original_Ims/", "Data/Better_Marked_DS/WM_Images/", "Data/Watermarks/")
+    # generate_wm_directory("Data/Big_Dataset/Original_Ims/", "Data/Big_Dataset/WM_Images/", "Data/Watermarks/")
     
     #Then run this function
     # toss_ims2dirs("Data/Better_Marked_DS/", "Data/BetterDataset1000/", 30000)
 
-    toss_ims2dirs("Data/Big_Dataset/", "Data/Dataset1000/", 1500)
+    # toss_ims2dirs("Data/Big_Dataset/", "Data/Dataset1000/", 25, data_split=(0, 0, 1))
 if __name__ == "__main__":
     main()
 
