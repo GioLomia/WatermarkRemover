@@ -10,7 +10,7 @@ For our project we required a large amount of image data. Fortunately we did not
 
 In addition to that we will be using a subsample of the 100,000-image dataset. Since the computational resources required to train on the entire data set of such size far exceeds our capabilities. For our training and testing composition we will be using 5000 image subsample 80% of which will be allocated to training, 10% to testing and 10% to validation. We are using both validation and testing subsets in order to reduce overfitting as much as possible. 
 
-![watermark examples](Assets/wmExamples.png)
+![watermark examples](Assets/wmExamples.PNG)
 
 You can see some of the examples in the image above. Another important preprocessing we completed was image resize and rescale. Since the images have to be put into the network with uniform size and each pixel value has to range from 0 to 1. The data we have collected and processed should be more than enough for our needs. It is also important to note we will be resizing the images to 448x448 in order to reduce the computational resources it will require us to train our network.
 <br></br>
