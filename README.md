@@ -10,7 +10,7 @@ For our project we required a large amount of image data. Fortunately we did not
 
 In addition to that we will be using a subsample of the 100,000-image dataset. Since the computational resources required to train on the entire data set of such size far exceeds our capabilities. For our training and testing composition we will be using 5000 image subsample 80% of which will be allocated to training, 10% to testing and 10% to validation. We are using both validation and testing subsets in order to reduce overfitting as much as possible. 
 
-![watermark examples](Assets/wmExamples.PNG)
+![watermark examples](Assets/wmExamples.png)
 
 You can see some of the examples in the image above. Another important preprocessing we completed was image resize and rescale. Since the images have to be put into the network with uniform size and each pixel value has to range from 0 to 1. The data we have collected and processed should be more than enough for our needs. It is also important to note we will be resizing the images to 448x448 in order to reduce the computational resources it will require us to train our network.
 <br></br>
@@ -111,24 +111,24 @@ We then calculate the generator's loss which quantifies how well the image was c
 
 After training the autoencoder for 40 epochs we were able to achieve some impressive results. On the left is the input into the autoencoder, while on the right is the image produced by the autoencoder.
 
-![Autoencoder](Assets/ex_1.PNG)
-![Autoencoder](Assets/ex_2.PNG)
-![Autoencoder](Assets/ex_3.PNG)
-![Autoencoder](Assets/ex_4.PNG)
+![im1](Assets/ex_1.png)
+![im2](Assets/ex_2.png)
+![im3](Assets/ex_3.png)
+![im4](Assets/ex_4.png)
 
 As you can see such an autoencoder is capable of producing good results even without training in tandem with the discriminator. It is important to note that our ultimate goal is to maximize the performance of the generator, as such the discriminator network is ultimately disposable and serves as a tool to improve the generator output. Thus the fact that the autoencoder is already performing well is a good sign.
 
 To further illustrate the process by which the generator produces images we will demonstrate intermediate outputs of each convolutional layer of the encoder. Given the following input into the autoencoder generator:
 
-![Autoencoder](Assets/input_1.PNG)
+![input](Assets/input_1.png)
 
 The intermediate layer outputs are as follows: (note each layer has much more outputs each, the most interesting elements were selected):
 
-![Autoencoder](Assets/intermediate_layers.png)
+![layers](Assets/intermediate_layers.png)
 
 As you can see, the autoencoder performs as we expected. The encoder is able to separate the noise from the features, i.e. differentiate between the watermark and the objects within the image. Below you can see the output of the generator. You can see that the watermark is largely removed and the decoder was able to reconstruct the image with removing most of the watermark.
 
-![Autoencoder](Assets/output_2.PNG)
+![output](Assets/output_2.png)
 
 We also performed some experimentation with the size of the generator and different shapes of the filters. Important to note that as we increase the number of layers we are also forced to decrease the number of the filters in each consecutive layer in order to maintain the overall structure of the autoencoder. However any additional layers result in further compression of features and result in a decrease in performance. Further experimentation would allow us to find optimal parameters. Overall we have seen great performance with our generator after training for 40 epochs with Adam optimizer, we have achieved the loss of 0.0403 and we can clearly see some good results coming out of the generator network.
 
